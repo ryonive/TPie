@@ -1,3 +1,6 @@
+# 1.14.0.0
+- Added support for Patch 7.5 and Dalamud API 15.
+
 # 1.13.0.2
 - Fixed nested rings bug introduced in last version.
 
