@@ -16,6 +16,7 @@ using System.Numerics;
 using System.Reflection;
 using TPie.Config;
 using TPie.Helpers;
+using TPie.Ipc;
 using TPie.Models;
 using TPie.Models.Elements;
 
@@ -63,6 +64,8 @@ namespace TPie
 
         public static ISharedImmediateTexture? RingBackground;
 
+        private TPieIpcProvider? _ipcProvider;
+
         public Plugin(
             IClientState clientState,
             IObjectTable objectTable,
@@ -103,7 +106,7 @@ namespace TPie
                 AssemblyLocation = Assembly.GetExecutingAssembly().Location;
             }
 
-            Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.14.0.0";
+            Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.14.0.1";
 
             Framework.Update += Update;
             UiBuilder.Draw += Draw;
@@ -133,6 +136,7 @@ namespace TPie
             CreateWindows();
 
             RingsManager = new RingsManager();
+            _ipcProvider = new TPieIpcProvider();
             WotsitHelper.Instance?.Update();
         }
 
@@ -319,6 +323,7 @@ namespace TPie
             JobsHelper.Instance?.Dispose();
             ItemsHelper.Instance?.Dispose();
             WotsitHelper.Instance?.Dispose();
+            _ipcProvider?.Dispose();
 
             _windowSystem.RemoveAllWindows();
 
